@@ -93,6 +93,55 @@ const { data } = await userService.login({ username, password });
 const response = await userService.getUserList({ page: 1, limit: 10 });
 ```
 
+## 后台管理系统架构 (Admin System Architecture)
+
+**布局组件**:
+
+```
+src/components/layout/
+├── admin-layout.tsx          # 主布局容器
+├── sidebar.tsx              # 侧边栏导航
+└── header.tsx               # 顶部导航栏
+```
+
+**主题系统**:
+
+```
+src/components/theme/
+├── theme-provider.tsx       # 主题提供者
+└── theme-toggle.tsx         # 主题切换组件
+```
+
+**页面结构**:
+
+```
+src/app/dashboard/           # 管理后台路由组
+├── layout.tsx              # 仪表盘布局
+├── page.tsx                # 仪表盘首页
+├── users/page.tsx          # 用户管理页面
+└── settings/page.tsx       # 系统设置页面
+```
+
+**核心功能**:
+
+- 响应式布局 (支持移动端和桌面端)
+- 可折叠侧边栏导航
+- 深色/浅色主题切换
+- 数据表格组件 (基于 TanStack Table)
+- 表单组件 (基于 React Hook Form + Zod)
+- 统计卡片和图表占位
+
+**导航菜单**:
+
+- 仪表盘 (/dashboard)
+- 用户管理 (/dashboard/users)
+- 订单管理 (/dashboard/orders)
+- 产品管理 (/dashboard/products)
+- 数据统计 (/dashboard/analytics)
+- 文档管理 (/dashboard/documents)
+- 权限管理 (/dashboard/permissions)
+- 系统设置 (/dashboard/settings)
+
 ## 字体配置 (Font Configuration)
 
 项目使用 Vercel 的 Geist 字体族：
@@ -100,3 +149,7 @@ const response = await userService.getUserList({ page: 1, limit: 10 });
 - Geist Sans: 主要字体
 - Geist Mono: 等宽字体
 - 通过 CSS 变量 `--font-geist-sans` 和 `--font-geist-mono` 配置
+
+## 开发服务器
+
+应用程序运行在 http://localhost:3000
