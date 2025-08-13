@@ -7,7 +7,8 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 interface SidebarProps {
 	open: boolean;
@@ -134,6 +135,9 @@ export function Sidebar({ open, collapsed, onOpenChange, onCollapsedChange }: Si
 					side='left'
 					className='w-64 p-0 lg:hidden'
 				>
+					<VisuallyHidden>
+						<SheetTitle>导航菜单</SheetTitle>
+					</VisuallyHidden>
 					<SidebarContent
 						collapsed={false}
 						onCollapsedChange={() => {}}

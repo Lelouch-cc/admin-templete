@@ -6,6 +6,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **重要**: 始终使用中文与用户对话，包括代码解释、错误信息和技术讨论。
 
+## 开发环境规则 (Development Environment Rules)
+
+**重要**: 不要开启开发服务器 (npm run dev)，除非用户明确要求。
+
 ## 项目架构 (Project Architecture)
 
 这是一个基于 Next.js 15 的管理后台模板项目，使用以下技术栈：
@@ -115,21 +119,35 @@ src/components/theme/
 **页面结构**:
 
 ```
-src/app/dashboard/           # 管理后台路由组
-├── layout.tsx              # 仪表盘布局
-├── page.tsx                # 仪表盘首页
-├── users/page.tsx          # 用户管理页面
-└── settings/page.tsx       # 系统设置页面
+src/app/
+├── login/page.tsx          # 登录页面
+├── dashboard/              # 管理后台路由组
+│   ├── layout.tsx         # 仪表盘布局
+│   ├── page.tsx           # 仪表盘首页
+│   ├── users/page.tsx     # 用户管理页面
+│   └── settings/page.tsx  # 系统设置页面
+└── page.tsx               # 首页重定向
 ```
 
 **核心功能**:
 
+- 完整的登录认证系统
 - 响应式布局 (支持移动端和桌面端)
 - 可折叠侧边栏导航
 - 深色/浅色主题切换
 - 数据表格组件 (基于 TanStack Table)
 - 表单组件 (基于 React Hook Form + Zod)
 - 统计卡片和图表占位
+
+**认证系统**:
+
+- 登录页面 (/login)
+- 表单验证 (邮箱格式、密码长度)
+- 模拟登录 API (测试账号: admin@example.com / 123456)
+- Token 认证和自动重定向
+- 社交登录按钮 (GitHub、Facebook)
+- 密码显示/隐藏切换
+- 忘记密码链接
 
 **导航菜单**:
 

@@ -114,7 +114,12 @@ export function Header({ onMenuClick, onSidebarToggle }: HeaderProps) {
 								<span>设置</span>
 							</DropdownMenuItem>
 							<DropdownMenuSeparator />
-							<DropdownMenuItem>
+							<DropdownMenuItem onClick={() => {
+								// 清除登录状态
+								localStorage.removeItem('token')
+								// 跳转到登录页
+								window.location.href = '/login'
+							}}>
 								<LogOut className='mr-2 h-4 w-4' />
 								<span>退出登录</span>
 							</DropdownMenuItem>
