@@ -3,15 +3,15 @@
  * 基于 Day.js 实现，提供常用的日期格式化、计算、验证等功能
  */
 
-import dayjs, { Dayjs } from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone';
-import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
-import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
-import weekOfYear from 'dayjs/plugin/weekOfYear';
-import dayOfYear from 'dayjs/plugin/dayOfYear';
-import 'dayjs/locale/zh-cn';
+import dayjs, { Dayjs } from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+import weekOfYear from "dayjs/plugin/weekOfYear";
+import dayOfYear from "dayjs/plugin/dayOfYear";
+import "dayjs/locale/zh-cn";
 
 // 加载插件
 dayjs.extend(relativeTime);
@@ -23,7 +23,7 @@ dayjs.extend(weekOfYear);
 dayjs.extend(dayOfYear);
 
 // 设置中文语言
-dayjs.locale('zh-cn');
+dayjs.locale("zh-cn");
 
 export type DateInput = string | number | Date | Dayjs;
 
@@ -33,11 +33,11 @@ export type DateInput = string | number | Date | Dayjs;
  * @param format 格式化模板 (YYYY-MM-DD HH:mm:ss)
  * @returns 格式化后的日期字符串
  */
-export function formatDate(date: DateInput, format = 'YYYY-MM-DD HH:mm:ss'): string {
-  if (!date) return '';
-  
-  const d = dayjs(date);
-  return d.isValid() ? d.format(format) : '';
+export function formatDate(date: DateInput, format = "YYYY-MM-DD HH:mm:ss"): string {
+	if (!date) return "";
+
+	const d = dayjs(date);
+	return d.isValid() ? d.format(format) : "";
 }
 
 /**
@@ -46,12 +46,12 @@ export function formatDate(date: DateInput, format = 'YYYY-MM-DD HH:mm:ss'): str
  * @returns 相对时间字符串 (如: 刚刚、5分钟前、2小时前)
  */
 export function formatRelativeTime(date: DateInput): string {
-  if (!date) return '';
-  
-  const d = dayjs(date);
-  if (!d.isValid()) return '';
-  
-  return d.fromNow();
+	if (!date) return "";
+
+	const d = dayjs(date);
+	if (!d.isValid()) return "";
+
+	return d.fromNow();
 }
 
 /**
@@ -61,12 +61,12 @@ export function formatRelativeTime(date: DateInput): string {
  * @returns 天数差
  */
 export function getDaysDiff(startDate: DateInput, endDate: DateInput): number {
-  const start = dayjs(startDate);
-  const end = dayjs(endDate);
-  
-  if (!start.isValid() || !end.isValid()) return 0;
-  
-  return Math.abs(end.diff(start, 'day'));
+	const start = dayjs(startDate);
+	const end = dayjs(endDate);
+
+	if (!start.isValid() || !end.isValid()) return 0;
+
+	return Math.abs(end.diff(start, "day"));
 }
 
 /**
@@ -76,7 +76,7 @@ export function getDaysDiff(startDate: DateInput, endDate: DateInput): number {
  * @returns 新的 Dayjs 对象
  */
 export function addDays(date: DateInput, days: number): Dayjs {
-  return dayjs(date).add(days, 'day');
+	return dayjs(date).add(days, "day");
 }
 
 /**
@@ -86,7 +86,7 @@ export function addDays(date: DateInput, days: number): Dayjs {
  * @returns 新的 Dayjs 对象
  */
 export function addMonths(date: DateInput, months: number): Dayjs {
-  return dayjs(date).add(months, 'month');
+	return dayjs(date).add(months, "month");
 }
 
 /**
@@ -96,7 +96,7 @@ export function addMonths(date: DateInput, months: number): Dayjs {
  * @returns 新的 Dayjs 对象
  */
 export function addYears(date: DateInput, years: number): Dayjs {
-  return dayjs(date).add(years, 'year');
+	return dayjs(date).add(years, "year");
 }
 
 /**
@@ -106,7 +106,7 @@ export function addYears(date: DateInput, years: number): Dayjs {
  * @returns 新的 Dayjs 对象
  */
 export function subtractDays(date: DateInput, days: number): Dayjs {
-  return dayjs(date).subtract(days, 'day');
+	return dayjs(date).subtract(days, "day");
 }
 
 /**
@@ -114,50 +114,50 @@ export function subtractDays(date: DateInput, days: number): Dayjs {
  * @param type 范围类型
  * @returns 包含开始和结束日期的对象
  */
-export function getDateRange(type: 'today' | 'yesterday' | 'week' | 'month' | 'year'): {
-  start: Dayjs;
-  end: Dayjs;
+export function getDateRange(type: "today" | "yesterday" | "week" | "month" | "year"): {
+	start: Dayjs;
+	end: Dayjs;
 } {
-  const now = dayjs();
-  
-  switch (type) {
-    case 'today':
-      return {
-        start: now.startOf('day'),
-        end: now.endOf('day')
-      };
-    
-    case 'yesterday':
-      const yesterday = now.subtract(1, 'day');
-      return {
-        start: yesterday.startOf('day'),
-        end: yesterday.endOf('day')
-      };
-    
-    case 'week':
-      return {
-        start: now.startOf('week'),
-        end: now.endOf('week')
-      };
-    
-    case 'month':
-      return {
-        start: now.startOf('month'),
-        end: now.endOf('month')
-      };
-    
-    case 'year':
-      return {
-        start: now.startOf('year'),
-        end: now.endOf('year')
-      };
-    
-    default:
-      return {
-        start: now.startOf('day'),
-        end: now.endOf('day')
-      };
-  }
+	const now = dayjs();
+
+	switch (type) {
+		case "today":
+			return {
+				start: now.startOf("day"),
+				end: now.endOf("day"),
+			};
+
+		case "yesterday":
+			const yesterday = now.subtract(1, "day");
+			return {
+				start: yesterday.startOf("day"),
+				end: yesterday.endOf("day"),
+			};
+
+		case "week":
+			return {
+				start: now.startOf("week"),
+				end: now.endOf("week"),
+			};
+
+		case "month":
+			return {
+				start: now.startOf("month"),
+				end: now.endOf("month"),
+			};
+
+		case "year":
+			return {
+				start: now.startOf("year"),
+				end: now.endOf("year"),
+			};
+
+		default:
+			return {
+				start: now.startOf("day"),
+				end: now.endOf("day"),
+			};
+	}
 }
 
 /**
@@ -167,13 +167,13 @@ export function getDateRange(type: 'today' | 'yesterday' | 'week' | 'month' | 'y
  * @returns 是否为有效日期
  */
 export function isValidDate(dateString: string, format?: string): boolean {
-  if (!dateString) return false;
-  
-  if (format) {
-    return dayjs(dateString, format, true).isValid();
-  }
-  
-  return dayjs(dateString).isValid();
+	if (!dateString) return false;
+
+	if (format) {
+		return dayjs(dateString, format, true).isValid();
+	}
+
+	return dayjs(dateString).isValid();
 }
 
 /**
@@ -181,7 +181,7 @@ export function isValidDate(dateString: string, format?: string): boolean {
  * @returns 当前时间戳（毫秒）
  */
 export function now(): number {
-  return dayjs().valueOf();
+	return dayjs().valueOf();
 }
 
 /**
@@ -190,7 +190,7 @@ export function now(): number {
  * @returns 今天 00:00:00 的 Dayjs 对象
  */
 export function startOfDay(date?: DateInput): Dayjs {
-  return dayjs(date).startOf('day');
+	return dayjs(date).startOf("day");
 }
 
 /**
@@ -199,7 +199,7 @@ export function startOfDay(date?: DateInput): Dayjs {
  * @returns 今天 23:59:59.999 的 Dayjs 对象
  */
 export function endOfDay(date?: DateInput): Dayjs {
-  return dayjs(date).endOf('day');
+	return dayjs(date).endOf("day");
 }
 
 /**
@@ -208,7 +208,7 @@ export function endOfDay(date?: DateInput): Dayjs {
  * @returns 月初 00:00:00 的 Dayjs 对象
  */
 export function startOfMonth(date?: DateInput): Dayjs {
-  return dayjs(date).startOf('month');
+	return dayjs(date).startOf("month");
 }
 
 /**
@@ -217,7 +217,7 @@ export function startOfMonth(date?: DateInput): Dayjs {
  * @returns 月末 23:59:59.999 的 Dayjs 对象
  */
 export function endOfMonth(date?: DateInput): Dayjs {
-  return dayjs(date).endOf('month');
+	return dayjs(date).endOf("month");
 }
 
 /**
@@ -227,7 +227,7 @@ export function endOfMonth(date?: DateInput): Dayjs {
  * @returns 是否为同一天
  */
 export function isSameDay(date1: DateInput, date2: DateInput): boolean {
-  return dayjs(date1).isSame(dayjs(date2), 'day');
+	return dayjs(date1).isSame(dayjs(date2), "day");
 }
 
 /**
@@ -236,7 +236,7 @@ export function isSameDay(date1: DateInput, date2: DateInput): boolean {
  * @returns 是否为今天
  */
 export function isToday(date: DateInput): boolean {
-  return dayjs(date).isSame(dayjs(), 'day');
+	return dayjs(date).isSame(dayjs(), "day");
 }
 
 /**
@@ -245,7 +245,7 @@ export function isToday(date: DateInput): boolean {
  * @returns 是否为昨天
  */
 export function isYesterday(date: DateInput): boolean {
-  return dayjs(date).isSame(dayjs().subtract(1, 'day'), 'day');
+	return dayjs(date).isSame(dayjs().subtract(1, "day"), "day");
 }
 
 /**
@@ -254,7 +254,7 @@ export function isYesterday(date: DateInput): boolean {
  * @returns 是否为明天
  */
 export function isTomorrow(date: DateInput): boolean {
-  return dayjs(date).isSame(dayjs().add(1, 'day'), 'day');
+	return dayjs(date).isSame(dayjs().add(1, "day"), "day");
 }
 
 /**
@@ -263,7 +263,7 @@ export function isTomorrow(date: DateInput): boolean {
  * @returns 是否为本周
  */
 export function isThisWeek(date: DateInput): boolean {
-  return dayjs(date).isSame(dayjs(), 'week');
+	return dayjs(date).isSame(dayjs(), "week");
 }
 
 /**
@@ -272,7 +272,7 @@ export function isThisWeek(date: DateInput): boolean {
  * @returns 是否为本月
  */
 export function isThisMonth(date: DateInput): boolean {
-  return dayjs(date).isSame(dayjs(), 'month');
+	return dayjs(date).isSame(dayjs(), "month");
 }
 
 /**
@@ -281,7 +281,7 @@ export function isThisMonth(date: DateInput): boolean {
  * @returns 是否为本年
  */
 export function isThisYear(date: DateInput): boolean {
-  return dayjs(date).isSame(dayjs(), 'year');
+	return dayjs(date).isSame(dayjs(), "year");
 }
 
 /**
@@ -292,8 +292,8 @@ export function isThisYear(date: DateInput): boolean {
  * @returns 是否在范围内
  */
 export function isBetween(date: DateInput, start: DateInput, end: DateInput): boolean {
-  const d = dayjs(date);
-  return d.isSameOrAfter(dayjs(start), 'day') && d.isSameOrBefore(dayjs(end), 'day');
+	const d = dayjs(date);
+	return d.isSameOrAfter(dayjs(start), "day") && d.isSameOrBefore(dayjs(end), "day");
 }
 
 /**
@@ -304,15 +304,10 @@ export function isBetween(date: DateInput, start: DateInput, end: DateInput): bo
  * @param format 日期格式
  * @returns 格式化的时间区间字符串
  */
-export function formatDateRange(
-  start: DateInput,
-  end: DateInput,
-  separator = ' - ',
-  format = 'YYYY-MM-DD'
-): string {
-  const startStr = formatDate(start, format);
-  const endStr = formatDate(end, format);
-  return `${startStr}${separator}${endStr}`;
+export function formatDateRange(start: DateInput, end: DateInput, separator = " - ", format = "YYYY-MM-DD"): string {
+	const startStr = formatDate(start, format);
+	const endStr = formatDate(end, format);
+	return `${startStr}${separator}${endStr}`;
 }
 
 /**
@@ -321,8 +316,8 @@ export function formatDateRange(
  * @param locale 语言环境
  * @returns 星期几的字符串
  */
-export function getWeekday(date: DateInput, locale = 'zh-cn'): string {
-  return dayjs(date).locale(locale).format('dddd');
+export function getWeekday(date: DateInput, locale = "zh-cn"): string {
+	return dayjs(date).locale(locale).format("dddd");
 }
 
 /**
@@ -331,8 +326,8 @@ export function getWeekday(date: DateInput, locale = 'zh-cn'): string {
  * @param locale 语言环境
  * @returns 月份名称
  */
-export function getMonthName(date: DateInput, locale = 'zh-cn'): string {
-  return dayjs(date).locale(locale).format('MMMM');
+export function getMonthName(date: DateInput, locale = "zh-cn"): string {
+	return dayjs(date).locale(locale).format("MMMM");
 }
 
 /**
@@ -341,7 +336,7 @@ export function getMonthName(date: DateInput, locale = 'zh-cn'): string {
  * @returns 季度数字 (1-4)
  */
 export function getQuarter(date: DateInput): number {
-  return Math.ceil((dayjs(date).month() + 1) / 3);
+	return Math.ceil((dayjs(date).month() + 1) / 3);
 }
 
 /**
@@ -350,7 +345,7 @@ export function getQuarter(date: DateInput): number {
  * @returns 周数
  */
 export function getWeekOfYear(date: DateInput): number {
-  return dayjs(date).week();
+	return dayjs(date).week();
 }
 
 /**
@@ -359,7 +354,7 @@ export function getWeekOfYear(date: DateInput): number {
  * @returns 天数
  */
 export function getDayOfYear(date: DateInput): number {
-  return dayjs(date).dayOfYear();
+	return dayjs(date).dayOfYear();
 }
 
 /**
@@ -368,7 +363,7 @@ export function getDayOfYear(date: DateInput): number {
  * @returns 本月的天数
  */
 export function getDaysInMonth(date: DateInput): number {
-  return dayjs(date).daysInMonth();
+	return dayjs(date).daysInMonth();
 }
 
 /**
@@ -378,7 +373,7 @@ export function getDaysInMonth(date: DateInput): number {
  * @returns 转换后的 Dayjs 对象
  */
 export function toTimezone(date: DateInput, timezone: string): Dayjs {
-  return dayjs(date).tz(timezone);
+	return dayjs(date).tz(timezone);
 }
 
 /**
@@ -387,7 +382,7 @@ export function toTimezone(date: DateInput, timezone: string): Dayjs {
  * @returns UTC 时间的 Dayjs 对象
  */
 export function toUTC(date: DateInput): Dayjs {
-  return dayjs(date).utc();
+	return dayjs(date).utc();
 }
 
 /**
@@ -396,7 +391,7 @@ export function toUTC(date: DateInput): Dayjs {
  * @returns 本地时间的 Dayjs 对象
  */
 export function fromUTC(date: DateInput): Dayjs {
-  return dayjs.utc(date).local();
+	return dayjs.utc(date).local();
 }
 
 /**
@@ -405,7 +400,7 @@ export function fromUTC(date: DateInput): Dayjs {
  * @returns Dayjs 对象
  */
 export function createDate(date?: DateInput): Dayjs {
-  return dayjs(date);
+	return dayjs(date);
 }
 
 /**
@@ -415,7 +410,7 @@ export function createDate(date?: DateInput): Dayjs {
  * @returns Dayjs 对象
  */
 export function parseDate(dateString: string, format: string): Dayjs {
-  return dayjs(dateString, format);
+	return dayjs(dateString, format);
 }
 
 // 导出 dayjs 实例供直接使用
